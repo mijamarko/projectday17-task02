@@ -1,14 +1,14 @@
 package exceptions;
 
-public class EmptyFieldException extends Throwable{
+public class NonUniqueUsernameException extends Throwable {
+	
+	private static final long serialVersionUID = 2L;
 
-	private static final long serialVersionUID = 1L;
-
-	public EmptyFieldException() {
+	public NonUniqueUsernameException() {
 		super();
 	}
 
-	public EmptyFieldException(String message) {
+	public NonUniqueUsernameException(String message) {
 		super(message);
 	}
 
@@ -21,7 +21,5 @@ public class EmptyFieldException extends Throwable{
 	public void printStackTrace() {
 		super.printStackTrace();
 	}
-	
-	
 
 }

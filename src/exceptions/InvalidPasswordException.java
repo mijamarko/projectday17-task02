@@ -1,14 +1,14 @@
 package exceptions;
 
-public class EmptyFieldException extends Throwable{
+public class InvalidPasswordException extends Throwable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 
-	public EmptyFieldException() {
+	public InvalidPasswordException() {
 		super();
 	}
 
-	public EmptyFieldException(String message) {
+	public InvalidPasswordException(String message) {
 		super(message);
 	}
 
@@ -21,7 +21,5 @@ public class EmptyFieldException extends Throwable{
 	public void printStackTrace() {
 		super.printStackTrace();
 	}
-	
-	
-
+		
 }
