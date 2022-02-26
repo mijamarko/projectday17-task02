@@ -3,7 +3,9 @@ package domain;
 import java.util.Scanner;
 
 import enums.Roles;
+import exceptions.EmptyFieldException;
 import exceptions.InvalidPasswordException;
+import exceptions.NonExistingRoleException;
 import exceptions.NonMatchingPasswordsException;
 import exceptions.NonUniqueUsernameException;
 import service.Validator;
@@ -63,7 +65,13 @@ public class Admin extends User{
 	}
 	
 	private void closeOrBack() {
-		
+		int selection = -1;
+		System.out.print("Press 0 to go back to main many or any other key to exit.");
+		try (Scanner sc = new Scanner(System.in)){
+			selection = sc.nextInt();
+			if(selection == 0) this.start();
+			else System.exit(0);
+		}
 	}
 
 	private void deleteUser() {
@@ -95,47 +103,91 @@ public class Admin extends User{
 			do {
 				selection = sc.nextLine();
 				try {
-					if(Validator.isUsernameUnique(selection, this.getUsers().users)) {
-						username = selection;
-						selection = "";
+					if(Validator.notNullOrEmpty(selection)) {
+						if(Validator.isUsernameUnique(selection, this.getUsers().users)) {
+							username = selection;
+							selection = null;
+						}
 					}
-				} catch (NonUniqueUsernameException e) {
+				} catch (EmptyFieldException | NonUniqueUsernameException e) {
 					System.out.println(e.getMessage());
-				}
-			} while(!selection.equals(""));
+				}				
+			} while(!selection.equals(null));
 			System.out.println();
-			System.out.print("Enter the users name: ");
-			name = sc.nextLine();
-			System.out.println();
-			System.out.print("Enter the users surname: ");
-			surname = sc.nextLine();
-			System.out.println();
-			System.out.print("Enter the users password: ");
+			System.out.print("Enter the user's name: ");
 			do {
 				selection = sc.nextLine();
 				try {
-					if(Validator.isPasswordValid(selection)) {
-						password = selection;
-						selection = "";
+					if(Validator.notNullOrEmpty(selection)) {
+						name = selection;
+						selection = null;
 					}
-				} catch (InvalidPasswordException e) {
+				} catch (EmptyFieldException e) {
 					System.out.println(e.getMessage());
-				}
-			} while(!selection.equals(""));
+				}				
+			} while(!selection.equals(null));
 			System.out.println();
-			System.out.print("Repeat the users password: ");
+			System.out.print("Enter the user's surname: ");
 			do {
 				selection = sc.nextLine();
 				try {
-					if(Validator.doPasswordsMatch(password, selection)) {
-						selection = "";
+					if(Validator.notNullOrEmpty(selection)) {
+						surname = selection;
+						selection = null;
 					}
-				} catch (NonMatchingPasswordsException e) {
+				} catch (EmptyFieldException e) {
+					System.out.println(e.getMessage());
+				}				
+			} while(!selection.equals(null));
+			System.out.println();
+			System.out.print("Enter the user's password: ");
+			do {
+				selection = sc.nextLine();
+				try {
+					if(Validator.notNullOrEmpty(selection)) {
+						if(Validator.isPasswordValid(selection)) {
+							password = selection;
+							selection = null;
+						}
+					}
+				} catch (InvalidPasswordException | EmptyFieldException e) {
 					System.out.println(e.getMessage());
 				}
-			} while(!selection.equals(""));
+			} while(!selection.equals(null));
+			System.out.println();
+			System.out.print("Repeat the user's password: ");
+			do {
+				selection = sc.nextLine();
+				try {
+					if(Validator.notNullOrEmpty(selection)) {
+						if(Validator.doPasswordsMatch(password, selection)) {
+							selection = null;
+						}
+					}
+				} catch (NonMatchingPasswordsException | EmptyFieldException e) {
+					System.out.println(e.getMessage());
+				}
+			} while(!selection.equals(null));
+			System.out.println();
+			System.out.print("What is the user's role: ");
+			do {
+				selection = sc.nextLine();
+				try {
+					if(Validator.notNullOrEmpty(selection)) {
+						role = Validator.roleExists(selection);
+						selection = null;
+					}
+				} catch (EmptyFieldException | NonExistingRoleException e) {
+					System.out.println(e.getMessage());
+				}
+			} while(!selection.equals(null));
 		}
-		
+		if(role == Roles.ADMIN) {
+			this.getUsers().users.add(new Admin(name, surname, username, password, role));
+		} else
+			this.getUsers().users.add(new Editor(name, surname, username, password, role));
+		System.out.println("User successfully created!");
+		closeOrBack();
 	}
 
 	@Override

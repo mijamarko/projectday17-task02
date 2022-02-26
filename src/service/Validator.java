@@ -6,18 +6,26 @@ import domain.User;
 import enums.Roles;
 import exceptions.EmptyFieldException;
 import exceptions.InvalidPasswordException;
+import exceptions.NonExistingRoleException;
 import exceptions.NonMatchingPasswordsException;
 import exceptions.NonUniqueUsernameException;
 
 public interface Validator {
 	
-	static boolean isNotNull(String name, String surname, String username, String password, Roles role) throws EmptyFieldException {
-		if(name == null || surname == null || username == null || password == null || role == null) {
-			throw new EmptyFieldException("No fields can be null. Please try again");
-		} else if (name == "" || surname == "" || username == "" || password == "" ) {
-			throw new EmptyFieldException("No fields can be empty. Please try again");
+	static boolean notNullOrEmpty(String param) throws EmptyFieldException {
+		if (!param.equals(null) && !param.equals("")) return true;
+		throw new EmptyFieldException("No fields can be null or empty. Please try again.");
+	}
+	
+	static Roles roleExists(String role) throws NonExistingRoleException {
+		role = role.toUpperCase();
+		switch (role) {
+		case "ADMIN":
+		case "EDITOR":
+			return Roles.getRole(role);
+		default:
+			throw new NonExistingRoleException("The desired role does not exist.");
 		}
-		return true;
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
