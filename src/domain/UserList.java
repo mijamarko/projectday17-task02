@@ -19,7 +19,9 @@ public class UserList implements LoginCheckInterface  {
 	}
 
 	public boolean contains(String username) {
-		// TODO Auto-generated method stub
+		for(User user : users) {
+			if (user.getUsername().equals(username)) return true;
+		}
 		return false;
 	}	
 

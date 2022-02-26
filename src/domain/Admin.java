@@ -3,6 +3,10 @@ package domain;
 import java.util.Scanner;
 
 import enums.Roles;
+import exceptions.InvalidPasswordException;
+import exceptions.NonMatchingPasswordsException;
+import exceptions.NonUniqueUsernameException;
+import service.Validator;
 
 public class Admin extends User{
 
@@ -57,6 +61,10 @@ public class Admin extends User{
 			}
 		}
 	}
+	
+	private void closeOrBack() {
+		
+	}
 
 	private void deleteUser() {
 		// TODO Auto-generated method stub
@@ -79,7 +87,54 @@ public class Admin extends User{
 	}
 
 	private void createUser() {
-		// TODO Auto-generated method stub
+		System.out.println("Creating a new user...");
+		String selection = "", name = "", surname = "", username = "", password = "";
+		Roles role = null;
+		try (Scanner sc = new Scanner(System.in)){
+			System.out.print("Enter the desired username: ");
+			do {
+				selection = sc.nextLine();
+				try {
+					if(Validator.isUsernameUnique(selection, this.getUsers().users)) {
+						username = selection;
+						selection = "";
+					}
+				} catch (NonUniqueUsernameException e) {
+					System.out.println(e.getMessage());
+				}
+			} while(!selection.equals(""));
+			System.out.println();
+			System.out.print("Enter the users name: ");
+			name = sc.nextLine();
+			System.out.println();
+			System.out.print("Enter the users surname: ");
+			surname = sc.nextLine();
+			System.out.println();
+			System.out.print("Enter the users password: ");
+			do {
+				selection = sc.nextLine();
+				try {
+					if(Validator.isPasswordValid(selection)) {
+						password = selection;
+						selection = "";
+					}
+				} catch (InvalidPasswordException e) {
+					System.out.println(e.getMessage());
+				}
+			} while(!selection.equals(""));
+			System.out.println();
+			System.out.print("Repeat the users password: ");
+			do {
+				selection = sc.nextLine();
+				try {
+					if(Validator.doPasswordsMatch(password, selection)) {
+						selection = "";
+					}
+				} catch (NonMatchingPasswordsException e) {
+					System.out.println(e.getMessage());
+				}
+			} while(!selection.equals(""));
+		}
 		
 	}
 

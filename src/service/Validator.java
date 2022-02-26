@@ -1,6 +1,8 @@
 package service;
 
-import domain.UserList;
+import java.util.List;
+
+import domain.User;
 import enums.Roles;
 import exceptions.EmptyFieldException;
 import exceptions.InvalidPasswordException;
@@ -18,8 +20,9 @@ public interface Validator {
 		return true;
 	}
 	
-	static boolean isUsernameUnique(String username, UserList userList) throws NonUniqueUsernameException{
-		if (userList.contains(username)) {
+	@SuppressWarnings("unlikely-arg-type")
+	static boolean isUsernameUnique(String username, List<User> userList) throws NonUniqueUsernameException{
+		if (!userList.contains(username)) {
 			return true;
 		}
 		throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
