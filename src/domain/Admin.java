@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.List;
 import java.util.Scanner;
 
 import enums.Roles;
@@ -75,8 +76,25 @@ public class Admin extends User{
 	}
 
 	private void deleteUser() {
-		// TODO Auto-generated method stub
-
+		System.out.print("Enter the user's username: ");
+		String username = "";
+		try (Scanner sc = new Scanner(System.in)){
+			do {
+				username = sc.nextLine();
+				if(Validator.notNullOrEmpty(username)) {
+					if(UserList.contains(username)) {
+						if(UserList.deleteUser(username)) {
+							System.out.println("User successfully deleted.");
+							username = null;
+						} else {
+							throw new EmptyFieldException();
+						}
+					}
+				}
+			} while(!username.equals(null));
+		} catch (EmptyFieldException e) {
+			System.out.println("The requested user does not exist.");
+		}
 	}
 
 	private void editUser() {
@@ -85,13 +103,36 @@ public class Admin extends User{
 	}
 
 	private void showUser() {
-		// TODO Auto-generated method stub
-		
+		System.out.print("Enter the user's username: ");
+		String username = "";
+		try (Scanner sc = new Scanner(System.in)){
+			do {
+				username = sc.nextLine();
+				if(Validator.notNullOrEmpty(username)) {
+					if(UserList.contains(username)) {
+						System.out.println(UserList.getUser(username));
+						username = null;
+					} else {
+						throw new EmptyFieldException();
+					}
+				}
+			} while(!username.equals(null));
+		} catch (EmptyFieldException e) {
+			System.out.println("The requested user does not exist.");
+		}
+		this.closeOrBack();
 	}
 
 	private void showAllUsers() {
-		// TODO Auto-generated method stub
-		
+		List<User> list = UserList.getUsers();
+		if(list.size() > 0) {
+			for(User user : list) {
+				System.out.println(user);
+			}
+		} else {
+			System.out.println("No registered users.");
+		}
+		closeOrBack();
 	}
 
 	private void createUser() {
@@ -104,7 +145,7 @@ public class Admin extends User{
 				selection = sc.nextLine();
 				try {
 					if(Validator.notNullOrEmpty(selection)) {
-						if(Validator.isUsernameUnique(selection, this.getUsers().users)) {
+						if(Validator.isUsernameUnique(selection, UserList.getUsers())) {
 							username = selection;
 							selection = null;
 						}
@@ -183,9 +224,9 @@ public class Admin extends User{
 			} while(!selection.equals(null));
 		}
 		if(role == Roles.ADMIN) {
-			this.getUsers().users.add(new Admin(name, surname, username, password, role));
+			UserList.getUsers().add(new Admin(name, surname, username, password, role));
 		} else
-			this.getUsers().users.add(new Editor(name, surname, username, password, role));
+			UserList.getUsers().add(new Editor(name, surname, username, password, role));
 		System.out.println("User successfully created!");
 		closeOrBack();
 	}
