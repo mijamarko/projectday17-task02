@@ -21,6 +21,10 @@ public abstract class User {
 		this.password = password;
 		this.role = role;
 	}
+	
+	public abstract void showMenu();
+	
+	public abstract void start();
 
 	public Roles getRole() {
 		return role;

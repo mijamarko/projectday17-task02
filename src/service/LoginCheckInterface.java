@@ -8,7 +8,7 @@ import domain.UserList;
 
 public interface LoginCheckInterface {
 	
-	public static int checkUsername(List<User> list ,String username) {
+	public static int checkUsername(List<User> list, String username) {
 		for (int i = 0; i < list.size()-1; i++) {
 			if(list.get(i).equals(username)) {
 				return i;
