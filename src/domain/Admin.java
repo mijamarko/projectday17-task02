@@ -60,7 +60,7 @@ public class Admin extends User{
 
 	private void deleteUser() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void editUser() {

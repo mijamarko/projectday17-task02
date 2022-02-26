@@ -11,6 +11,7 @@ public abstract class User {
 	private final String username;
 	private final String password;
 	private Roles role;
+	private UserList users;
 	
 	
 	public User(String name, String surname, String username, String password, Roles role) {
@@ -20,6 +21,7 @@ public abstract class User {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		users = UserList.getInstance();
 	}
 	
 	public abstract void showMenu();
@@ -48,6 +50,10 @@ public abstract class User {
 
 	public String getPassword() {
 		return password;
+	}
+	
+	public UserList getUsers() {
+		return users;
 	}
 
 	@Override
