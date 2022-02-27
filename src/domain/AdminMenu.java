@@ -14,10 +14,12 @@ import service.Validator;
 public class AdminMenu implements UserMenu {
 	
 	private String username;
+	private UserList list;
 	
-	public AdminMenu(String username) {
+	public AdminMenu(String username, UserList list) {
 		super();
 		this.username = username;
+		this.list=list;
 	}
 
 	@Override
@@ -59,8 +61,8 @@ public class AdminMenu implements UserMenu {
 			do {
 				username = sc.nextLine();
 				if(Validator.notNullOrEmpty(username)) {
-					if(UserList.getInstance().contains(username)) {
-						User user = UserList.getInstance().showUser(username);
+					if(list.contains(username)) {
+						User user = list.showUser(username);
 						System.out.println("Editing user " + username + "'s details...");
 						System.out.println("If you don't want to edit a field leave it blank.");
 						String newUsername = "", newName = "", newSurname = "", newPassword = "";
@@ -184,8 +186,8 @@ public class AdminMenu implements UserMenu {
 			do {
 				username = sc.nextLine();
 				if(Validator.notNullOrEmpty(username)) {
-					if(UserList.getInstance().contains(username)) {
-						User deletedUser = UserList.getInstance().deleteUser(username);
+					if(list.contains(username)) {
+						User deletedUser = list.deleteUser(username);
 						if(deletedUser.equals(null)) {
 							throw new EmptyFieldException();
 						} else {
@@ -208,8 +210,8 @@ public class AdminMenu implements UserMenu {
 			do {
 				username = sc.nextLine();
 				if(Validator.notNullOrEmpty(username)) {
-					if(UserList.getInstance().contains(username)) {
-						System.out.println(UserList.getInstance().showUser(username));
+					if(list.contains(username)) {
+						System.out.println(list.showUser(username));
 						username = null;
 					} else {
 						throw new EmptyFieldException();
@@ -233,7 +235,7 @@ public class AdminMenu implements UserMenu {
 	}
 
 	private void showAllUsers() {
-		UserList.getInstance().listUsers();
+		list.listUsers();
 		this.closeOrBack();
 	}
 
@@ -325,7 +327,7 @@ public class AdminMenu implements UserMenu {
 				}
 			} while(!selection.equals(null));
 		}
-		User newUser = UserList.getInstance().addUser(new User(name, surname, username, password, role));
+		User newUser = list.addUser(new User(name, surname, username, password, role));
 		if(newUser.equals(null)) {
 			System.out.println("Something went wrong. The user was not created.");
 		} else {
