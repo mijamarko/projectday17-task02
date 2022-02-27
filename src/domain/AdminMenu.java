@@ -207,17 +207,18 @@ public class AdminMenu implements UserMenu {
 		System.out.print("Enter the user's username: ");
 		String username = "";
 		try (Scanner sc = new Scanner(System.in)){
-			do {
-				username = sc.nextLine();
+			//do {
+				this.username = sc.nextLine();
 				if(Validator.notNullOrEmpty(username)) {
-					if(list.contains(username)) {
-						System.out.println(list.showUser(username));
-						username = null;
+					if(this.list.contains(username)) {
+						System.out.println("YES");
+						System.out.println(this.list.showUser(username).toString());
+//						username = null;
 					} else {
 						throw new EmptyFieldException();
 					}
 				}
-			} while(!username.equals(null));
+			//} while(list.contains(username));	///!username.equals(null)
 		} catch (EmptyFieldException e) {
 			System.out.println("The requested user does not exist.");
 		}

@@ -30,9 +30,13 @@ public class UserList implements CRUDInterface {
 	}
 
 	public boolean contains(String username) {
+		if(userList.size()==1) {
+			if(userList.get(0).getUsername().equals(username))return true;
+		}else {
 			for (int i = 0; i < userList.size()-1; i++) {
 				if(userList.get(i).getUsername().equals(username))return true;
 			}
+		}
 		return false;
 	}
 
