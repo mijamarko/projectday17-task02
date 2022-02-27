@@ -12,15 +12,14 @@ public interface Validator {
 	
 
 	public static boolean notNullOrEmpty(String param) throws EmptyFieldException {
-		if (param != null && !param.equals("")) return true;
-		throw new EmptyFieldException("No fields can be null or empty. Please try again.");
+		if (param != null && !(param.equals(""))) return true;
+		else throw new EmptyFieldException("No fields can be null or empty. Please try again.");
 	}
 	
 	public static boolean isUsernameUnique(String username) throws NonUniqueUsernameException{
 		if (!UserList.getInstance().contains(username)) {
 			return true;
-		}
-		throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
+		}else throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
 	}
 	
 	public static Roles roleExists(String role) throws NonExistingRoleException {
