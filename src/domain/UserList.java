@@ -1,16 +1,32 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
+import service.CRUDInterface;
 import service.LoginCheckInterface;
 
+public class UserList implements CRUDInterface {
 
-public class UserList implements LoginCheckInterface  {
-	
-	private static List<User> users = new ArrayList<>();
-	
-	private static final UserList INSTANCE = new UserList();
+	List<User> userList = new ArrayList<>();
+		
+	public boolean contains(String username) {
+			for (int i = 0; i < userList.size()-1; i++) {
+				if(userList.get(i).getUsername().equals(username))return true;
+			}
+		return false;
+	}
+
+	@Override
+	public void listUsers() {
+		for(User u : userList) {
+			System.out.println(u.toString());
+		}		
+	}
+
+  private static final UserList INSTANCE = new UserList();
 	
 	private UserList() {};
 	
@@ -18,33 +34,52 @@ public class UserList implements LoginCheckInterface  {
 		return INSTANCE;
 	}
 
-	public static boolean contains(String username) {
-		for(User user : users) {
-			if (user.getUsername().equals(username)) return true;
-		}
-		return false;
-	}
-	
-	public static User getUser(String username) {
-		for(User user : users) {
-			if (user.getUsername().equals(username)) return user;
+	@Override
+	public User deleteUser(String username) {
+		if(contains(username)) {
+			for (int i = 0; i < userList.size()-1; i++) {
+				if(userList.get(i).getUsername().equals(username)) {
+					User deleted = userList.get(i);
+					userList.remove(i);
+					return deleted;
+				}
+			}		
 		}
 		return null;
 	}
-	
-	public static List<User> getUsers(){
-		return users;
-	}
-	
-	public static boolean deleteUser(String username) {
-		for(User user : users) {
-			if(user.getUsername().equals(username)) {
-				users.remove(user);
-				return true;
-			}
+
+	@Override
+	public User showUser(String username) {
+		if(contains(username)) {
+			for (int i = 0; i < userList.size()-1; i++) {
+				if(userList.get(i).getUsername().equals(username))	return userList.get(i);
+			}		
 		}
-		return false;
+		return null;
 	}
 
- 
+	@Override
+	public User editUser(String username, User user) {
+		if(contains(username)) {
+			for (int i = 0; i < userList.size()-1; i++) {
+				if(userList.get(i).getUsername().equals(username)) {
+					userList.remove(i);
+					User added = addUser(user);
+					return added;
+				}
+			}		
+		}
+		return null;
+	}
+
+	@Override
+	public User addUser(User user) {
+		if (!contains(user.getUsername())) {
+			userList.add(user);
+			return user;
+		}
+		System.out.println("Already taken username!");
+		return null;
+	}	
+	
 }
