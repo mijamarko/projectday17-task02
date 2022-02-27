@@ -14,12 +14,12 @@ import service.Validator;
 public class AdminMenu implements UserMenu {
 	
 	private String username;
-	private UserList list;
+	private UserList list = UserList.getInstance();
 	
-	public AdminMenu(String username, UserList list) {
+	public AdminMenu(String username) {
 		super();
 		this.username = username;
-		this.list=list;
+//		this.list=list;
 	}
 
 	@Override
@@ -224,8 +224,8 @@ public class AdminMenu implements UserMenu {
 
 	private void closeOrBack() {
 		int selection = -1;
-		System.out.println("Press 0 to go back to main many or any other key to exit.");
 		try (Scanner sc = new Scanner(System.in)){
+			System.out.println("Press 0 to go back to main many or any other key to exit.");
 			selection = sc.nextInt();
 			if(selection == 0) this.start();
 			else System.exit(0);

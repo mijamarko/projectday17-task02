@@ -6,7 +6,7 @@ import service.LoginCheckInterface;
 
 public class Logger implements LoginCheckInterface{
 
-	private UserList userList;
+	private UserList userList = UserList.getInstance();
 	private String username;
 	private String password;
 	private User loggedUser;
@@ -18,7 +18,7 @@ public class Logger implements LoginCheckInterface{
 	public Logger() {
 		this.counter=0;
 		this.scanner = new Scanner(System.in);
-		this.userList = UserList.getInstance();
+//		this.userList = UserList.getInstance();
 	}
 	
 	public String getUsername() {
@@ -69,7 +69,7 @@ public class Logger implements LoginCheckInterface{
 	
 	public void run() {
 		if(getLoggedUser().getRole().equals(Roles.ADMIN)) {
-			adminMenu = new AdminMenu(getLoggedUser().getUsername(),this.userList);
+			adminMenu = new AdminMenu(getLoggedUser().getUsername());
 			adminMenu.start();
 		}else {
 			editorMenu = new EditorMenu();

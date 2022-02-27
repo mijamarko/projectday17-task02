@@ -8,12 +8,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		User marko = new User("Marko", "Markovic", "marence", "pass123", Roles.ADMIN);
-		
-		UserMenu menu = new AdminMenu(marko.getUsername(), UserList.getInstance());
-		
-		menu.start();
-		
+//		User marko = new User("Marko", "Markovic", "marence", "pass123", Roles.ADMIN);
+//		
+//		UserMenu menu = new AdminMenu(marko.getUsername(), UserList.getInstance());
+//		
+//		menu.start();
+//		
 	}
 
 }
