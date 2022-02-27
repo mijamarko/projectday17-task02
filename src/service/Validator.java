@@ -1,8 +1,6 @@
 package service;
 
-import java.util.List;
-
-import domain.User;
+import domain.UserList;
 import enums.Roles;
 import exceptions.EmptyFieldException;
 import exceptions.InvalidPasswordException;
@@ -12,12 +10,20 @@ import exceptions.NonUniqueUsernameException;
 
 public interface Validator {
 	
-	static boolean notNullOrEmpty(String param) throws EmptyFieldException {
+
+	public static boolean notNullOrEmpty(String param) throws EmptyFieldException {
 		if (!param.equals(null) && !param.equals("")) return true;
 		throw new EmptyFieldException("No fields can be null or empty. Please try again.");
 	}
 	
-	static Roles roleExists(String role) throws NonExistingRoleException {
+	public static boolean isUsernameUnique(String username) throws NonUniqueUsernameException{
+		if (!UserList.getInstance().contains(username)) {
+			return true;
+		}
+		throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
+	}
+	
+	public static Roles roleExists(String role) throws NonExistingRoleException {
 		role = role.toUpperCase();
 		switch (role) {
 		case "ADMIN":
@@ -28,16 +34,8 @@ public interface Validator {
 		}
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
-	static boolean isUsernameUnique(String username, List<User> userList) throws NonUniqueUsernameException{
-		if (!userList.contains(username)) {
-			return true;
-		}
-		throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
-	}
 	
-	
-	static boolean isPasswordValid(String password) throws InvalidPasswordException {
+	public static boolean isPasswordValid(String password) throws InvalidPasswordException {
 		String regex = "^\\D+\\d+$";
 		if(password.matches(regex)) {
 			return true;
@@ -45,7 +43,7 @@ public interface Validator {
 		throw new InvalidPasswordException("The password has to start with a letter and contain at least one number.");
 	}
 	
-	static boolean doPasswordsMatch(String password, String repeatedPassword) throws NonMatchingPasswordsException {
+	public static boolean doPasswordsMatch(String password, String repeatedPassword) throws NonMatchingPasswordsException {
 		if(password.equals(repeatedPassword)) {
 			return true;
 		}

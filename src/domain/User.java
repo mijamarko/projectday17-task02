@@ -4,11 +4,11 @@ import java.util.Objects;
 
 import enums.Roles;
 
-public abstract class User {
+public class User {
 	
 	private String name;
 	private String surname;
-	private final String username;
+	private String username;
 	private String password;
 	private Roles role;
 	
@@ -21,13 +21,25 @@ public abstract class User {
 		this.password = password;
 		this.role = role;
 	}
-	
-	public abstract void showMenu();
-	
-	public abstract void start();
 
 	public Roles getRole() {
 		return role;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setRole(Roles role) {
@@ -48,18 +60,6 @@ public abstract class User {
 
 	public String getPassword() {
 		return password;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	@Override
