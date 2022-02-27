@@ -6,10 +6,10 @@ import enums.Roles;
 
 public class User {
 	
-	private final String name;
-	private final String surname;
-	private final String username;
-	private final String password;
+	private String name;
+	private String surname;
+	private String username;
+	private String password;
 	private Roles role;
 	
 	
@@ -24,6 +24,22 @@ public class User {
 
 	public Roles getRole() {
 		return role;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setRole(Roles role) {
