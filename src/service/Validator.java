@@ -12,7 +12,7 @@ public interface Validator {
 	
 
 	public static boolean notNullOrEmpty(String param) throws EmptyFieldException {
-		if (!param.equals(null) && !param.equals("")) return true;
+		if (param != null && !param.equals("")) return true;
 		throw new EmptyFieldException("No fields can be null or empty. Please try again.");
 	}
 	

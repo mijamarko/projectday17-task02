@@ -83,7 +83,7 @@ public class AdminMenu implements UserMenu {
 								System.out.println("Username not changed.");
 								selection = null;
 							}
-						} while(!selection.equals(null));
+						} while(selection != null);
 						System.out.println();
 						System.out.print("Enter the user's name: ");
 						do {
@@ -97,7 +97,7 @@ public class AdminMenu implements UserMenu {
 								System.out.println("Name not changed.");
 								selection = null;
 							}				
-						} while(!selection.equals(null));
+						} while(selection != null);
 						System.out.println();
 						System.out.print("Enter the user's surname: ");
 						do {
@@ -111,7 +111,7 @@ public class AdminMenu implements UserMenu {
 								System.out.println("Surname not changed.");
 								selection = null;
 							}				
-						} while(!selection.equals(null));
+						} while(selection != null);
 						System.out.println();
 						System.out.print("Enter the user's password: ");
 						do {
@@ -129,7 +129,7 @@ public class AdminMenu implements UserMenu {
 								System.out.println("Password not changed.");
 								selection = null;
 							}
-						} while(!selection.equals(null));
+						} while(selection != null);
 						System.out.println();
 						System.out.print("Repeat the user's password: ");
 						do {
@@ -146,7 +146,7 @@ public class AdminMenu implements UserMenu {
 								System.out.println("Password not changed.");
 								selection = null;
 							}
-						} while(!selection.equals(null));
+						} while(selection != null);
 						System.out.println();
 						System.out.print("What is the user's role: ");
 						do {
@@ -162,7 +162,7 @@ public class AdminMenu implements UserMenu {
 								System.out.println("Role not changed.");
 								selection = null;
 							}
-						} while(!selection.equals(null));
+						} while(selection != null);
 						user.setName(newName.equals("") ? user.getName() : newName);
 						user.setSurname(newSurname.equals("") ? user.getSurname() : newSurname);
 						user.setUsername(newUsername.equals("") ? user.getUsername() : newUsername);
@@ -172,7 +172,7 @@ public class AdminMenu implements UserMenu {
 						this.closeOrBack();
 					}
 				}
-			} while(!username.equals(null));
+			} while(username != null);
 		} catch (EmptyFieldException e) {
 			System.out.println("The requested user does not exist.");
 		}
@@ -196,7 +196,7 @@ public class AdminMenu implements UserMenu {
 						}
 					}
 				}
-			} while(!username.equals(null));
+			} while(username != null);
 		} catch (EmptyFieldException e) {
 			System.out.println("The requested user does not exist.");
 		}
@@ -218,7 +218,7 @@ public class AdminMenu implements UserMenu {
 						throw new EmptyFieldException();
 					}
 				}
-			//} while(list.contains(username));	///!username.equals(null)
+
 		} catch (EmptyFieldException e) {
 			System.out.println("The requested user does not exist.");
 		}
@@ -258,7 +258,7 @@ public class AdminMenu implements UserMenu {
 				} catch (EmptyFieldException | NonUniqueUsernameException e) {
 					System.out.println(e.getMessage());
 				}				
-			} while(!selection.equals(null));
+			} while(selection != null);
 			System.out.println();
 			System.out.print("Enter the user's name: ");
 			do {
@@ -271,7 +271,7 @@ public class AdminMenu implements UserMenu {
 				} catch (EmptyFieldException e) {
 					System.out.println(e.getMessage());
 				}				
-			} while(!selection.equals(null));
+			} while(selection != null);
 			System.out.println();
 			System.out.print("Enter the user's surname: ");
 			do {
@@ -284,7 +284,7 @@ public class AdminMenu implements UserMenu {
 				} catch (EmptyFieldException e) {
 					System.out.println(e.getMessage());
 				}				
-			} while(!selection.equals(null));
+			} while(selection != null);
 			System.out.println();
 			System.out.print("Enter the user's password: ");
 			do {
@@ -299,7 +299,7 @@ public class AdminMenu implements UserMenu {
 				} catch (InvalidPasswordException | EmptyFieldException e) {
 					System.out.println(e.getMessage());
 				}
-			} while(!selection.equals(null));
+			} while(selection != null);
 			System.out.println();
 			System.out.print("Repeat the user's password: ");
 			do {
@@ -313,7 +313,7 @@ public class AdminMenu implements UserMenu {
 				} catch (NonMatchingPasswordsException | EmptyFieldException e) {
 					System.out.println(e.getMessage());
 				}
-			} while(!selection.equals(null));
+			} while(selection != null);
 			System.out.println();
 			System.out.print("What is the user's role: ");
 			do {
@@ -326,7 +326,7 @@ public class AdminMenu implements UserMenu {
 				} catch (EmptyFieldException | NonExistingRoleException e) {
 					System.out.println(e.getMessage());
 				}
-			} while(!selection.equals(null));
+			} while(selection != null);
 		}
 		User newUser = list.addUser(new User(name, surname, username, password, role));
 		if(newUser.equals(null)) {
