@@ -24,7 +24,16 @@ public class Editor extends User{
 				+ ", getUsername()=" + getUsername() + ", getPassword()=" + getPassword() + ", toString()="
 				+ super.toString() + ", getClass()=" + getClass() + "]";
 	}
-	
-	
+
+	@Override
+	public void showMenu() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

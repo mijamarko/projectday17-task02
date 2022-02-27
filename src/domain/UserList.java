@@ -26,6 +26,14 @@ public class UserList implements CRUDInterface {
 		}		
 	}
 
+  private static final UserList INSTANCE = new UserList();
+	
+	private UserList() {};
+	
+	public static UserList getInstance() {
+		return INSTANCE;
+	}
+
 	@Override
 	public User deleteUser(String username) {
 		if(contains(username)) {

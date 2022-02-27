@@ -1,25 +1,36 @@
 package service;
 
-import domain.UserList;
+import java.util.List;
+
+import domain.User;
 import enums.Roles;
 import exceptions.EmptyFieldException;
 import exceptions.InvalidPasswordException;
+import exceptions.NonExistingRoleException;
 import exceptions.NonMatchingPasswordsException;
 import exceptions.NonUniqueUsernameException;
 
 public interface Validator {
 	
-	static boolean isNotNull(String name, String surname, String username, String password, Roles role) throws EmptyFieldException {
-		if(name == null || surname == null || username == null || password == null || role == null) {
-			throw new EmptyFieldException("No fields can be null. Please try again");
-		} else if (name == "" || surname == "" || username == "" || password == "" ) {
-			throw new EmptyFieldException("No fields can be empty. Please try again");
-		}
-		return true;
+	static boolean notNullOrEmpty(String param) throws EmptyFieldException {
+		if (!param.equals(null) && !param.equals("")) return true;
+		throw new EmptyFieldException("No fields can be null or empty. Please try again.");
 	}
 	
-	static boolean isUsernameUnique(String username, UserList userList) throws NonUniqueUsernameException{
-		if (userList.contains(username)) {
+	static Roles roleExists(String role) throws NonExistingRoleException {
+		role = role.toUpperCase();
+		switch (role) {
+		case "ADMIN":
+		case "EDITOR":
+			return Roles.getRole(role);
+		default:
+			throw new NonExistingRoleException("The desired role does not exist.");
+		}
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	static boolean isUsernameUnique(String username, List<User> userList) throws NonUniqueUsernameException{
+		if (!userList.contains(username)) {
 			return true;
 		}
 		throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
