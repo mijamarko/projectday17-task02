@@ -1,14 +1,19 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import service.CRUDInterface;
-import service.LoginCheckInterface;
 
 public class UserList implements CRUDInterface {
+	
+	private static final UserList INSTANCE = new UserList();
+	
+	private UserList() {};
+	
+	public static UserList getInstance() {
+		return INSTANCE;
+	}
 
 	List<User> userList = new ArrayList<>();
 		

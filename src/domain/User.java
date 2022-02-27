@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import enums.Roles;
 
-public abstract class User {
+public class User {
 	
 	private final String name;
 	private final String surname;

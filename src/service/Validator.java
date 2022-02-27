@@ -1,32 +1,43 @@
 package service;
 
+import java.util.List;
+
+import domain.User;
 import domain.UserList;
 import enums.Roles;
 import exceptions.EmptyFieldException;
 import exceptions.InvalidPasswordException;
+import exceptions.NonExistingRoleException;
 import exceptions.NonMatchingPasswordsException;
 import exceptions.NonUniqueUsernameException;
 
 public interface Validator {
 	
-	static boolean isNotNull(String name, String surname, String username, String password, Roles role) throws EmptyFieldException {
-		if(name == null || surname == null || username == null || password == null || role == null) {
-			throw new EmptyFieldException("No fields can be null. Please try again");
-		} else if (name == "" || surname == "" || username == "" || password == "" ) {
-			throw new EmptyFieldException("No fields can be empty. Please try again");
-		}
-		return true;
+	public static boolean notNullOrEmpty(String param) throws EmptyFieldException {
+		if (!param.equals(null) && !param.equals("")) return true;
+		throw new EmptyFieldException("No fields can be null or empty. Please try again.");
 	}
 	
-	static boolean isUsernameUnique(String username, UserList userList) throws NonUniqueUsernameException{
-		if (userList.contains(username)) {
+	public static boolean isUsernameUnique(String username) throws NonUniqueUsernameException{
+		if (!UserList.getInstance().contains(username)) {
 			return true;
 		}
 		throw new NonUniqueUsernameException("The username has to be unique. Please try again.");
 	}
 	
+	public static Roles roleExists(String role) throws NonExistingRoleException {
+		role = role.toUpperCase();
+		switch (role) {
+		case "ADMIN":
+		case "EDITOR":
+			return Roles.getRole(role);
+		default:
+			throw new NonExistingRoleException("The desired role does not exist.");
+		}
+	}
 	
-	static boolean isPasswordValid(String password) throws InvalidPasswordException {
+	
+	public static boolean isPasswordValid(String password) throws InvalidPasswordException {
 		String regex = "^\\D+\\d+$";
 		if(password.matches(regex)) {
 			return true;
@@ -34,7 +45,7 @@ public interface Validator {
 		throw new InvalidPasswordException("The password has to start with a letter and contain at least one number.");
 	}
 	
-	static boolean doPasswordsMatch(String password, String repeatedPassword) throws NonMatchingPasswordsException {
+	public static boolean doPasswordsMatch(String password, String repeatedPassword) throws NonMatchingPasswordsException {
 		if(password.equals(repeatedPassword)) {
 			return true;
 		}
