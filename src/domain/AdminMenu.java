@@ -16,10 +16,10 @@ public class AdminMenu implements UserMenu {
 	private String username;
 	private UserList list = UserList.getInstance();
 	
-	public AdminMenu(String username, UserList list) {
+	public AdminMenu(String username) {
 		super();
 		this.username = username;
-		this.list=list;
+//		this.list=list;
 	}
 
 	@Override

@@ -69,7 +69,9 @@ public class Logger implements LoginCheckInterface{
 	
 	public void run() {
 		if(getLoggedUser().getRole().equals(Roles.ADMIN)) {
+
 			adminMenu = new AdminMenu(getLoggedUser().getUsername(), userList);
+
 			adminMenu.start();
 		}else {
 			editorMenu = new EditorMenu();
