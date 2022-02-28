@@ -206,14 +206,11 @@ public class AdminMenu implements UserMenu {
 	private void showUser() {
 		System.out.print("Enter the user's username: ");
 		String username = "";
-		try (Scanner sc = new Scanner(System.in)){
-			//do {
+		try (Scanner sc = new Scanner(System.in)){		
 				this.username = sc.nextLine();
 				if(Validator.notNullOrEmpty(username)) {
 					if(this.list.contains(username)) {
-						System.out.println("YES");
 						System.out.println(this.list.showUser(username).toString());
-//						username = null;
 					} else {
 						throw new EmptyFieldException();
 					}
